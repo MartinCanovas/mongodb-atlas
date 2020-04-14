@@ -5,5 +5,5 @@ terraform {
 
 # Configure the MongoDB Atlas Provider
 provider "mongodbatlas" {
-  version = "~> 0.3"
+  version = "~> 0.4"
 }
