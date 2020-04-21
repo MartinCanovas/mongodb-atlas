@@ -37,6 +37,10 @@ Destroy the Terraform-managed infrastructure:
 $ terraform destroy
 ```
 
+# Related Projects
+
+- [AWS VPC with Atlas Private Endpoint](https://github.com/MartinCanovas/aws-vpc-atlas-private-endpoint)
+
 <br/><br/>
 # License 
 
