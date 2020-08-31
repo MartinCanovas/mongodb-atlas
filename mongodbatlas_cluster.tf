@@ -1,15 +1,12 @@
-# Create a Project 
-resource "mongodbatlas_project" "my_project" {
-  name   = var.project_name
-  org_id = var.org_id
-}
-
 # Create a Cluster
 resource "mongodbatlas_cluster" "my_cluster" {
-  project_id                   = mongodbatlas_project.my_project.id
+  project_id                   = var.project.id
   name                         = var.cluster_name
+  cluster_type                 = "REPLICASET"
   replication_factor           = var.replication_factor
-  backup_enabled               = true
+  backup_enabled               = false
+  provider_backup_enabled      = true
+  pit_enabled                  = false
   auto_scaling_disk_gb_enabled = true
   mongo_db_major_version       = var.mongo_db_major_version
 
@@ -25,10 +22,10 @@ resource "mongodbatlas_cluster" "my_cluster" {
 
 # Create a Database User
 resource "mongodbatlas_database_user" "db_user" {
-  username 		  = var.db_username
-  password 	 	  = var.db_user_password
-  project_id    = mongodbatlas_project.my_project.id
-  database_name	= "admin"
+  username      = var.db_username
+  password      = var.db_user_password
+  project_id    = var.project.id
+  database_name = "admin"
 
   roles {
     role_name     = "readWriteAnyDatabase"
@@ -38,10 +35,15 @@ resource "mongodbatlas_database_user" "db_user" {
 
 # Create an IP Whitelist
 resource "mongodbatlas_project_ip_whitelist" "ip_whitelist" {
-  project_id = mongodbatlas_project.my_project.id  
-  
-  whitelist {  
-    cidr_block = var.whitelist_ip
-    comment    = var.whitelist_ip_desc
-  }
+  project_id = var.project.id
+  count      = length(var.whitelist_ip)
+  cidr_block = var.whitelist_ip[count.index]
+  comment    = var.whitelist_ip_desc
+}
+
+resource "mongodbatlas_auditing" "auditing" {
+  project_id                  = var.project_id
+  audit_filter                = "{ 'atype': 'authenticate', 'param': {   'user': 'auditAdmin',   'db': 'admin',   'mechanism': 'SCRAM-SHA-1' }}"
+  audit_authorization_success = false
+  enabled                     = false
 }

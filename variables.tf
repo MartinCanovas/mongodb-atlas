@@ -1,9 +1,9 @@
-variable "org_id" { 
+variable "org_id" {
   default = ""
 }
 
-variable "project_name" {
-  default = "Terraform - Project"
+variable "project_id" {
+  default = ""
 }
 
 variable "cluster_name" {
@@ -18,12 +18,17 @@ variable "db_user_password" {
   default = "terraform"
 }
 
-variable "whitelist_ip" {
-  default = "0.0.0.0/0"
+variable "email_address" {
+  default = ""
 }
 
-variable "whitelist_ip_desc" { 
-  default = "Added by Terraform" 
+variable "whitelist_ip" {
+  type    = list(string)
+  default = ["0.0.0.0/0"]
+}
+
+variable "whitelist_ip_desc" {
+  default = "Added by Terraform"
 }
 
 variable "replication_factor" {
@@ -33,12 +38,12 @@ variable "replication_factor" {
 
 variable "mongo_db_major_version" {
   description = "MongoDB version"
-  default     = "4.2"
+  default     = "4.4"
 }
 
 variable "provider_instance_size_name" {
   description = "Instance type"
-  default     = "M30"
+  default     = "M10"
 }
 
 variable "provider_region_name" {
