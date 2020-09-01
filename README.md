@@ -18,7 +18,10 @@ Documentation to create an Atlas API keys: https://docs.atlas.mongodb.com/config
 <br/><br/>
 # Usage
 
-Add the `org_id` value in variables.tf file with your Organization ID.
+Edit the variables.tf file and add values for the following variables:
+- org_id
+- project_id
+- email_address
 
 Change other variables value such as instance type, MongoDB version, and whitelist IP to your needs.
 
