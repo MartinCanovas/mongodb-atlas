@@ -1,6 +1,6 @@
 # Create a Cluster
 resource "mongodbatlas_cluster" "my_cluster" {
-  project_id                   = var.project.id
+  project_id                   = var.project_id
   name                         = var.cluster_name
   cluster_type                 = "REPLICASET"
   replication_factor           = var.replication_factor
@@ -10,7 +10,7 @@ resource "mongodbatlas_cluster" "my_cluster" {
   auto_scaling_disk_gb_enabled = true
   mongo_db_major_version       = var.mongo_db_major_version
 
-  //Provider Settings "block"
+# Provider Settings "block"
   provider_name               = "AWS"
   disk_size_gb                = 100
   provider_disk_iops          = 300
@@ -20,12 +20,18 @@ resource "mongodbatlas_cluster" "my_cluster" {
   provider_region_name        = var.provider_region_name
 }
 
+resource "mongodbatlas_maintenance_window" "my_cluster" {
+    project_id  = var.project_id
+    day_of_week = 1
+    hour_of_day = 3
+}
+
 # Create a Database User
 resource "mongodbatlas_database_user" "db_user" {
-  username      = var.db_username
-  password      = var.db_user_password
-  project_id    = var.project.id
-  database_name = "admin"
+  username 		  = var.db_username
+  password 	 	  = var.db_user_password
+  project_id    = var.project_id
+  auth_database_name	= "admin"
 
   roles {
     role_name     = "readWriteAnyDatabase"
@@ -35,7 +41,7 @@ resource "mongodbatlas_database_user" "db_user" {
 
 # Create an IP Whitelist
 resource "mongodbatlas_project_ip_whitelist" "ip_whitelist" {
-  project_id = var.project.id
+  project_id = var.project_id
   count      = length(var.whitelist_ip)
   cidr_block = var.whitelist_ip[count.index]
   comment    = var.whitelist_ip_desc
