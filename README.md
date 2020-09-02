@@ -43,6 +43,7 @@ $ terraform destroy
 # Related Projects
 
 - [AWS VPC with Atlas Private Endpoint](https://github.com/MartinCanovas/aws-vpc-atlas-private-endpoint)
+- [AWS VPC with Atlas Private Endpoint and an Atlas Cluster](https://github.com/MartinCanovas/aws-vpc-mongodb-atlas-private-endpoint)
 
 <br/><br/>
 # License 
