@@ -25,6 +25,11 @@ Edit the variables.tf file and add values for the following variables:
 
 Change other variables value such as instance type, MongoDB version, and whitelist IP to your needs.
 
+Initialize the working directory:
+```
+$ terraform init
+```
+
 Create an execution plan:
 ```
 $ terraform plan
